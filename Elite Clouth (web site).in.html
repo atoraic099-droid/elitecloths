@@ -1,0 +1,1297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Elite Cloths – Drop Culture Fashion</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;600;700&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --black: #080808;
+      --white: #f5f0e8;
+      --cream: #e8e0d0;
+      --accent: #ff3c1f;
+      --accent2: #ffcc00;
+      --mid: #1a1a1a;
+      --muted: #888;
+      --border: rgba(245,240,232,0.12);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Barlow', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* CUSTOM CURSOR */
+    .cursor {
+      position: fixed; top: 0; left: 0;
+      width: 12px; height: 12px;
+      background: var(--accent);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transition: transform 0.15s ease, opacity 0.2s;
+      transform: translate(-50%, -50%);
+    }
+    .cursor-ring {
+      position: fixed; top: 0; left: 0;
+      width: 36px; height: 36px;
+      border: 1.5px solid var(--accent);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: all 0.25s cubic-bezier(0.23,1,0.32,1);
+      opacity: 0.6;
+    }
+    .cursor.expand { transform: translate(-50%, -50%) scale(2.5); opacity: 0.5; }
+    .cursor-ring.expand { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 3rem;
+      background: rgba(8,8,8,0.85);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      letter-spacing: 0.08em;
+      color: var(--white);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links {
+      display: flex; gap: 2.2rem; list-style: none;
+    }
+    .nav-links a {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.25s;
+    }
+    .nav-links a:hover { color: var(--white); }
+    .nav-right {
+      display: flex; align-items: center; gap: 1.4rem;
+    }
+    .nav-cart {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--black);
+      background: var(--accent);
+      padding: 0.5rem 1.3rem;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.25s;
+    }
+    .nav-cart:hover { background: var(--accent2); color: var(--black); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span { width: 24px; height: 2px; background: var(--white); display: block; }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding-top: 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(245,240,232,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(245,240,232,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+    .hero-left {
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 5rem 3rem 5rem 4rem;
+      z-index: 1;
+    }
+    .hero-tag {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+    }
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(5rem, 10vw, 9rem);
+      line-height: 0.9;
+      letter-spacing: 0.02em;
+    }
+    .hero-title .outline {
+      -webkit-text-stroke: 2px var(--white);
+      color: transparent;
+    }
+    .hero-title .accent { color: var(--accent); }
+    .hero-sub {
+      margin-top: 2rem;
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 380px;
+      line-height: 1.7;
+    }
+    .hero-ctas {
+      display: flex; gap: 1rem; margin-top: 2.8rem; align-items: center;
+    }
+    .btn-primary {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.9rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 700;
+      background: var(--accent);
+      color: var(--black);
+      padding: 0.9rem 2.5rem;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.25s;
+      clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 100%, 10px 100%);
+    }
+    .btn-primary:hover { background: var(--accent2); transform: translateY(-2px); }
+    .btn-ghost {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: var(--white);
+      text-decoration: none;
+      border-bottom: 1px solid var(--muted);
+      padding-bottom: 2px;
+      transition: border-color 0.25s, color 0.25s;
+    }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+    .hero-stats {
+      display: flex; gap: 2.5rem; margin-top: 4rem;
+    }
+    .stat-item { }
+    .stat-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.4rem;
+      color: var(--accent2);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 0.2rem;
+    }
+    .hero-right {
+      position: relative;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .hero-visual {
+      width: 100%; height: 100%;
+      background: linear-gradient(135deg, #1a0a00 0%, #0d0d0d 50%, #0a001a 100%);
+      position: relative;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .hero-shirt-mockup {
+      width: min(420px, 85%);
+      aspect-ratio: 3/4;
+      background: linear-gradient(145deg, #1c1c1c, #2a2a2a);
+      border: 1px solid rgba(255,255,255,0.06);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .shirt-graphic {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 5rem;
+      color: var(--accent);
+      letter-spacing: -0.02em;
+      line-height: 1;
+      text-align: center;
+    }
+    .shirt-graphic .sub-text {
+      font-size: 1.1rem;
+      letter-spacing: 0.4em;
+      color: var(--white);
+      display: block;
+    }
+    .hero-badge {
+      position: absolute;
+      top: 2rem; right: 2rem;
+      width: 90px; height: 90px;
+      background: var(--accent);
+      border-radius: 50%;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.85rem;
+      color: var(--black);
+      letter-spacing: 0.05em;
+      line-height: 1.2;
+      text-align: center;
+      animation: spin-badge 8s linear infinite;
+    }
+    @keyframes spin-badge {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .hero-label {
+      position: absolute; bottom: 2rem; left: 2rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .diagonal-stripe {
+      position: absolute;
+      top: 0; right: 0;
+      width: 200px; height: 100%;
+      background: repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 10px,
+        rgba(255,60,31,0.04) 10px,
+        rgba(255,60,31,0.04) 20px
+      );
+      pointer-events: none;
+    }
+    .scroll-hint {
+      position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--muted);
+      animation: bounce 2s ease-in-out infinite;
+    }
+    .scroll-hint::after {
+      content: ''; width: 1px; height: 40px;
+      background: linear-gradient(to bottom, var(--muted), transparent);
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(6px); }
+    }
+
+    /* MARQUEE */
+    .marquee-wrap {
+      overflow: hidden;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 0;
+      background: var(--accent);
+    }
+    .marquee-track {
+      display: flex;
+      gap: 0;
+      animation: marquee 18s linear infinite;
+      white-space: nowrap;
+    }
+    .marquee-item {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.15em;
+      color: var(--black);
+      padding: 0 2rem;
+    }
+    .marquee-dot { color: var(--black); opacity: 0.4; }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* SECTION SHARED */
+    section { padding: 6rem 4rem; }
+    .section-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+    .section-title .outline {
+      -webkit-text-stroke: 1.5px var(--white);
+      color: transparent;
+    }
+
+    /* CATEGORIES */
+    .categories { background: var(--mid); padding: 6rem 4rem; }
+    .cat-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+    .cat-card {
+      position: relative;
+      aspect-ratio: 3/4;
+      overflow: hidden;
+      cursor: none;
+      group: true;
+    }
+    .cat-bg {
+      width: 100%; height: 100%;
+      display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
+      padding: 2rem 1.5rem;
+      transition: transform 0.5s cubic-bezier(0.23,1,0.32,1);
+      position: relative;
+    }
+    .cat-card:hover .cat-bg { transform: scale(1.04); }
+    .cat-card:nth-child(1) .cat-bg { background: linear-gradient(to top, #0a0a0a 20%, #1f1f2e); }
+    .cat-card:nth-child(2) .cat-bg { background: linear-gradient(to top, #0a0a0a 20%, #1f120a); }
+    .cat-card:nth-child(3) .cat-bg { background: linear-gradient(to top, #0a0a0a 20%, #0f1f0a); }
+    .cat-card:nth-child(4) .cat-bg { background: linear-gradient(to top, #0a0a0a 20%, #1f0a1f); }
+    .cat-icon {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      filter: drop-shadow(0 0 20px rgba(255,60,31,0.3));
+    }
+    .cat-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.8rem;
+      letter-spacing: 0.05em;
+      text-align: center;
+    }
+    .cat-count {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 0.3rem;
+    }
+    .cat-arrow {
+      position: absolute; top: 1.2rem; right: 1.2rem;
+      width: 32px; height: 32px;
+      border: 1px solid rgba(255,255,255,0.15);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem;
+      opacity: 0;
+      transition: opacity 0.3s, background 0.3s;
+    }
+    .cat-card:hover .cat-arrow { opacity: 1; background: var(--accent); border-color: var(--accent); }
+    .cat-overlay {
+      position: absolute; inset: 0;
+      border: 2px solid transparent;
+      transition: border-color 0.3s;
+      pointer-events: none;
+    }
+    .cat-card:hover .cat-overlay { border-color: var(--accent); }
+
+    /* FEATURED PRODUCTS */
+    .products { background: var(--black); }
+    .products-header {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      margin-bottom: 3rem;
+    }
+    .filter-tabs {
+      display: flex; gap: 0.5rem;
+    }
+    .tab {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.5rem 1.2rem;
+      border: 1px solid var(--border);
+      background: none;
+      color: var(--muted);
+      cursor: none;
+      transition: all 0.25s;
+    }
+    .tab.active, .tab:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--black);
+    }
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+    .product-card {
+      cursor: none;
+      position: relative;
+    }
+    .product-img {
+      aspect-ratio: 3/4;
+      background: var(--mid);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 1.2rem;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .product-img-inner {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      transition: transform 0.5s cubic-bezier(0.23,1,0.32,1);
+    }
+    .product-card:hover .product-img-inner { transform: scale(1.05); }
+    .product-mockup {
+      font-family: 'Bebas Neue', sans-serif;
+      text-align: center;
+      line-height: 1;
+    }
+    .product-mockup .p-icon { font-size: 4rem; display: block; }
+    .product-mockup .p-text { font-size: 1.4rem; letter-spacing: 0.1em; color: rgba(255,255,255,0.3); display: block; margin-top: 0.5rem; }
+    .product-tag-top {
+      position: absolute; top: 1rem; left: 1rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      background: var(--accent);
+      color: var(--black);
+      padding: 0.25rem 0.7rem;
+      font-weight: 700;
+    }
+    .product-actions {
+      position: absolute; bottom: 1rem; left: 0; right: 0;
+      display: flex; justify-content: center;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.3s;
+    }
+    .product-card:hover .product-actions { opacity: 1; transform: translateY(0); }
+    .add-to-cart {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      font-weight: 700;
+      background: var(--white);
+      color: var(--black);
+      border: none;
+      padding: 0.7rem 2rem;
+      cursor: none;
+      transition: background 0.25s;
+      clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 100%, 8px 100%);
+    }
+    .add-to-cart:hover { background: var(--accent2); }
+    .product-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .product-meta {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: 0.4rem;
+    }
+    .product-price {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.3rem;
+      color: var(--accent);
+    }
+    .product-old-price {
+      font-size: 0.85rem;
+      color: var(--muted);
+      text-decoration: line-through;
+      margin-left: 0.4rem;
+      font-family: 'Barlow', sans-serif;
+    }
+    .product-rating {
+      font-size: 0.75rem;
+      color: var(--accent2);
+    }
+
+    /* PROMO BANNER */
+    .promo {
+      background: var(--accent);
+      padding: 5rem 4rem;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 2rem;
+      position: relative; overflow: hidden;
+    }
+    .promo::before {
+      content: 'SALE';
+      position: absolute; right: -2rem; top: 50%; transform: translateY(-50%) rotate(-90deg);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 10rem;
+      color: rgba(0,0,0,0.08);
+      letter-spacing: 0.1em;
+      pointer-events: none;
+      line-height: 1;
+    }
+    .promo-left { z-index: 1; }
+    .promo-eyebrow {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,0.6);
+      margin-bottom: 0.5rem;
+    }
+    .promo-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      color: var(--black);
+      line-height: 0.95;
+    }
+    .promo-sub {
+      font-size: 0.95rem;
+      color: rgba(0,0,0,0.7);
+      margin-top: 1rem;
+      max-width: 360px;
+    }
+    .promo-cta {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.9rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 700;
+      background: var(--black);
+      color: var(--white);
+      padding: 1rem 2.8rem;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 2rem;
+      transition: background 0.25s, color 0.25s;
+      clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 100%, 10px 100%);
+    }
+    .promo-cta:hover { background: var(--white); color: var(--black); }
+    .promo-code-wrap {
+      z-index: 1;
+      text-align: center;
+    }
+    .promo-code-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,0.5);
+      margin-bottom: 0.5rem;
+    }
+    .promo-code {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3rem;
+      color: var(--black);
+      background: rgba(0,0,0,0.12);
+      padding: 0.8rem 2.5rem;
+      letter-spacing: 0.15em;
+      border: 2px dashed rgba(0,0,0,0.25);
+    }
+    .promo-discount {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.2rem;
+      color: rgba(0,0,0,0.6);
+      margin-top: 0.5rem;
+    }
+
+    /* WHY ELITE */
+    .why { background: var(--mid); }
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    .why-card {
+      border: 1px solid var(--border);
+      padding: 2rem 1.5rem;
+      position: relative;
+      transition: border-color 0.3s;
+    }
+    .why-card:hover { border-color: var(--accent); }
+    .why-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3.5rem;
+      color: rgba(255,60,31,0.12);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+    .why-icon { font-size: 2rem; margin-bottom: 1rem; display: block; }
+    .why-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+    .why-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+
+    /* NEWSLETTER */
+    .newsletter {
+      background: var(--black);
+      text-align: center;
+      padding: 7rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .newsletter::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at center, rgba(255,60,31,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .newsletter .section-title { margin-bottom: 0.5rem; }
+    .newsletter-sub { color: var(--muted); margin-bottom: 2.5rem; font-size: 0.95rem; }
+    .newsletter-form {
+      display: flex; justify-content: center; gap: 0;
+      max-width: 500px; margin: 0 auto;
+    }
+    .newsletter-input {
+      flex: 1;
+      padding: 1rem 1.5rem;
+      background: var(--mid);
+      border: 1px solid var(--border);
+      border-right: none;
+      color: var(--white);
+      font-family: 'Barlow', sans-serif;
+      font-size: 0.9rem;
+      outline: none;
+    }
+    .newsletter-input::placeholder { color: var(--muted); }
+    .newsletter-btn {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 700;
+      background: var(--accent);
+      color: var(--black);
+      border: none;
+      padding: 1rem 2rem;
+      cursor: none;
+      transition: background 0.25s;
+    }
+    .newsletter-btn:hover { background: var(--accent2); }
+
+    /* FOOTER */
+    footer {
+      background: #040404;
+      padding: 5rem 4rem 2rem;
+      border-top: 1px solid var(--border);
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 4rem;
+      margin-bottom: 4rem;
+    }
+    .footer-brand .logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.2rem;
+      letter-spacing: 0.08em;
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .footer-brand .logo span { color: var(--accent); }
+    .footer-brand p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 280px;
+      margin-bottom: 1.5rem;
+    }
+    .social-links { display: flex; gap: 0.8rem; }
+    .social-link {
+      width: 36px; height: 36px;
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem;
+      text-decoration: none;
+      color: var(--muted);
+      transition: all 0.25s;
+    }
+    .social-link:hover { border-color: var(--accent); color: var(--accent); background: rgba(255,60,31,0.1); }
+    .footer-col h4 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 1.5rem;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 0.7rem; }
+    .footer-col ul li a {
+      font-size: 0.85rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-col ul li a:hover { color: var(--accent); }
+    .footer-bottom {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+    .footer-bottom p {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+    .footer-bottom p a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .domain-badge {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      background: var(--mid);
+      padding: 0.3rem 0.8rem;
+      border: 1px solid var(--border);
+    }
+
+    /* ANIMATIONS */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* TOAST */
+    .toast {
+      position: fixed; bottom: 2rem; right: 2rem;
+      background: var(--white); color: var(--black);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.8rem 1.8rem;
+      z-index: 9999;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.4s cubic-bezier(0.23,1,0.32,1);
+      pointer-events: none;
+      clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 100%, 8px 100%);
+    }
+    .toast.show { opacity: 1; transform: translateY(0); }
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-right { display: none; }
+      .hero-left { padding: 6rem 1.5rem 3rem; }
+      section { padding: 4rem 1.5rem; }
+      .cat-grid { grid-template-columns: repeat(2, 1fr); }
+      .products-grid { grid-template-columns: repeat(2, 1fr); }
+      .why-grid { grid-template-columns: repeat(2, 1fr); }
+      .promo { flex-direction: column; padding: 4rem 1.5rem; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .categories, .products { padding: 4rem 1.5rem; }
+    }
+
+    @media (max-width: 600px) {
+      .hero-stats { gap: 1.5rem; }
+      .cat-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+      .products-grid { grid-template-columns: 1fr; }
+      .why-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .newsletter-form { flex-direction: column; }
+      .newsletter-input { border-right: 1px solid var(--border); border-bottom: none; }
+      .hero-ctas { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+  <div class="toast" id="toast">Added to cart 🔥</div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">ELITE<span>.</span>CLOTHS</a>
+    <ul class="nav-links">
+      <li><a href="#categories">Shop</a></li>
+      <li><a href="#products">New Drops</a></li>
+      <li><a href="#promo">Deals</a></li>
+      <li><a href="#why">About</a></li>
+      <li><a href="#newsletter">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="#" class="nav-cart">🛒 Cart (0)</a>
+      <div class="hamburger" id="hamburger">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-bg-grid"></div>
+    <div class="hero-left fade-up visible">
+      <p class="hero-tag">✦ elitecloths.in — Drop Culture Fashion</p>
+      <h1 class="hero-title">
+        WEAR<br>
+        <span class="outline">THE</span><br>
+        <span class="accent">ELITE</span>
+      </h1>
+      <p class="hero-sub">
+        Street-born. Youth-driven. Graphic tees, fresh pants, and signature hats — built for those who don't follow trends, they set them.
+      </p>
+      <div class="hero-ctas">
+        <a href="#products" class="btn-primary">Shop New Drops →</a>
+        <a href="#categories" class="btn-ghost">Browse Categories</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-num">12K+</div>
+          <div class="stat-label">Happy Customers</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">300+</div>
+          <div class="stat-label">Graphic Designs</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">100%</div>
+          <div class="stat-label">Premium Cotton</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-visual">
+        <div class="diagonal-stripe"></div>
+        <div class="hero-shirt-mockup">
+          <div class="shirt-graphic">
+            ELITE<br>
+            <span class="sub-text">CLOTHS</span>
+          </div>
+        </div>
+        <div class="hero-badge">NEW<br>DROP<br>2025</div>
+        <div class="hero-label">SS25 Collection — Now Live</div>
+      </div>
+    </div>
+    <div class="scroll-hint">Scroll</div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-wrap">
+    <div class="marquee-track" id="marqueeTrack">
+      <span class="marquee-item">Graphic Tees</span>
+      <span class="marquee-item marquee-dot">✦</span>
+      <span class="marquee-item">Street Pants</span>
+      <span class="marquee-item marquee-dot">✦</span>
+      <span class="marquee-item">Signature Hats</span>
+      <span class="marquee-item marquee-dot">✦</span>
+      <span class="marquee-item">Free Shipping ₹999+</span>
+      <span class="marquee-item marquee-dot">✦</span>
+      <span class="marquee-item">New Drops Weekly</span>
+      <span class="marquee-item marquee-dot">✦</span>
+      <span class="marquee-item">Premium Cotton</span>
+      <span class="marquee-item marquee-dot">✦</span>
+      <span class="marquee-item">Graphic Tees</span>
+      <span class="marquee-item marquee-dot">✦</span>
+      <span class="marquee-item">Street Pants</span>
+      <span class="marquee-item marquee-dot">✦</span>
+      <span class="marquee-item">Signature Hats</span>
+      <span class="marquee-item marquee-dot">✦</span>
+      <span class="marquee-item">Free Shipping ₹999+</span>
+      <span class="marquee-item marquee-dot">✦</span>
+      <span class="marquee-item">New Drops Weekly</span>
+      <span class="marquee-item marquee-dot">✦</span>
+      <span class="marquee-item">Premium Cotton</span>
+      <span class="marquee-item marquee-dot">✦</span>
+    </div>
+  </div>
+
+  <!-- CATEGORIES -->
+  <section class="categories" id="categories">
+    <p class="section-label fade-up">✦ What We Drop</p>
+    <h2 class="section-title fade-up">SHOP BY <span class="outline">CATEGORY</span></h2>
+    <div class="cat-grid">
+      <div class="cat-card fade-up">
+        <div class="cat-bg">
+          <div class="cat-icon">👕</div>
+          <div class="cat-name">Graphic Tees</div>
+          <div class="cat-count">84 Styles</div>
+        </div>
+        <div class="cat-arrow">→</div>
+        <div class="cat-overlay"></div>
+      </div>
+      <div class="cat-card fade-up">
+        <div class="cat-bg">
+          <div class="cat-icon">👖</div>
+          <div class="cat-name">Pants</div>
+          <div class="cat-count">42 Styles</div>
+        </div>
+        <div class="cat-arrow">→</div>
+        <div class="cat-overlay"></div>
+      </div>
+      <div class="cat-card fade-up">
+        <div class="cat-bg">
+          <div class="cat-icon">🧢</div>
+          <div class="cat-name">Hats & Caps</div>
+          <div class="cat-count">36 Styles</div>
+        </div>
+        <div class="cat-arrow">→</div>
+        <div class="cat-overlay"></div>
+      </div>
+      <div class="cat-card fade-up">
+        <div class="cat-bg">
+          <div class="cat-icon">🧥</div>
+          <div class="cat-name">Hoodies</div>
+          <div class="cat-count">28 Styles</div>
+        </div>
+        <div class="cat-arrow">→</div>
+        <div class="cat-overlay"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCTS -->
+  <section class="products" id="products">
+    <div class="products-header fade-up">
+      <div>
+        <p class="section-label">✦ Fresh Off The Press</p>
+        <h2 class="section-title">NEW <span class="outline">DROPS</span></h2>
+      </div>
+      <div class="filter-tabs">
+        <button class="tab active" onclick="filterTab(this, 'all')">All</button>
+        <button class="tab" onclick="filterTab(this, 'tees')">Tees</button>
+        <button class="tab" onclick="filterTab(this, 'pants')">Pants</button>
+        <button class="tab" onclick="filterTab(this, 'hats')">Hats</button>
+      </div>
+    </div>
+    <div class="products-grid" id="productsGrid">
+
+      <div class="product-card fade-up" data-cat="tees">
+        <div class="product-img">
+          <div class="product-img-inner">
+            <div class="product-mockup">
+              <span class="p-icon">👕</span>
+              <span class="p-text">RIOT MODE</span>
+            </div>
+          </div>
+          <span class="product-tag-top">New Drop</span>
+          <div class="product-actions">
+            <button class="add-to-cart" onclick="addToCart(this)">Add to Cart</button>
+          </div>
+        </div>
+        <div class="product-name">Riot Mode Graphic Tee</div>
+        <div class="product-meta">
+          <div><span class="product-price">₹899</span><span class="product-old-price">₹1,299</span></div>
+          <div class="product-rating">★★★★★</div>
+        </div>
+      </div>
+
+      <div class="product-card fade-up" data-cat="pants">
+        <div class="product-img">
+          <div class="product-img-inner">
+            <div class="product-mockup">
+              <span class="p-icon">👖</span>
+              <span class="p-text">CARGO FIT</span>
+            </div>
+          </div>
+          <span class="product-tag-top">Best Seller</span>
+          <div class="product-actions">
+            <button class="add-to-cart" onclick="addToCart(this)">Add to Cart</button>
+          </div>
+        </div>
+        <div class="product-name">Elite Cargo Streetwear Pants</div>
+        <div class="product-meta">
+          <div><span class="product-price">₹1,499</span><span class="product-old-price">₹2,000</span></div>
+          <div class="product-rating">★★★★☆</div>
+        </div>
+      </div>
+
+      <div class="product-card fade-up" data-cat="hats">
+        <div class="product-img">
+          <div class="product-img-inner">
+            <div class="product-mockup">
+              <span class="p-icon">🧢</span>
+              <span class="p-text">ELITE CAP</span>
+            </div>
+          </div>
+          <span class="product-tag-top">Limited</span>
+          <div class="product-actions">
+            <button class="add-to-cart" onclick="addToCart(this)">Add to Cart</button>
+          </div>
+        </div>
+        <div class="product-name">Snapback Elite Embroidered Cap</div>
+        <div class="product-meta">
+          <div><span class="product-price">₹599</span><span class="product-old-price">₹899</span></div>
+          <div class="product-rating">★★★★★</div>
+        </div>
+      </div>
+
+      <div class="product-card fade-up" data-cat="tees">
+        <div class="product-img">
+          <div class="product-img-inner">
+            <div class="product-mockup">
+              <span class="p-icon">👕</span>
+              <span class="p-text">ACID WASH</span>
+            </div>
+          </div>
+          <div class="product-actions">
+            <button class="add-to-cart" onclick="addToCart(this)">Add to Cart</button>
+          </div>
+        </div>
+        <div class="product-name">Acid Wash Oversized Tee</div>
+        <div class="product-meta">
+          <div><span class="product-price">₹799</span><span class="product-old-price">₹1,100</span></div>
+          <div class="product-rating">★★★★☆</div>
+        </div>
+      </div>
+
+      <div class="product-card fade-up" data-cat="tees">
+        <div class="product-img">
+          <div class="product-img-inner">
+            <div class="product-mockup">
+              <span class="p-icon">👕</span>
+              <span class="p-text">URBAN EDGE</span>
+            </div>
+          </div>
+          <span class="product-tag-top">Trending</span>
+          <div class="product-actions">
+            <button class="add-to-cart" onclick="addToCart(this)">Add to Cart</button>
+          </div>
+        </div>
+        <div class="product-name">Urban Edge Print Tee</div>
+        <div class="product-meta">
+          <div><span class="product-price">₹849</span><span class="product-old-price">₹1,200</span></div>
+          <div class="product-rating">★★★★★</div>
+        </div>
+      </div>
+
+      <div class="product-card fade-up" data-cat="hats">
+        <div class="product-img">
+          <div class="product-img-inner">
+            <div class="product-mockup">
+              <span class="p-icon">🧢</span>
+              <span class="p-text">STRAPBACK</span>
+            </div>
+          </div>
+          <div class="product-actions">
+            <button class="add-to-cart" onclick="addToCart(this)">Add to Cart</button>
+          </div>
+        </div>
+        <div class="product-name">Street Strapback Hat</div>
+        <div class="product-meta">
+          <div><span class="product-price">₹549</span><span class="product-old-price">₹799</span></div>
+          <div class="product-rating">★★★★☆</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PROMO BANNER -->
+  <div class="promo" id="promo">
+    <div class="promo-left fade-up">
+      <p class="promo-eyebrow">Limited Time Offer</p>
+      <h2 class="promo-title">FLAT 30%<br>OFF SITEWIDE</h2>
+      <p class="promo-sub">Drop code at checkout and unlock the deal. Valid until stocks last. No cap, only savings. 🔥</p>
+      <a href="#products" class="promo-cta">Shop the Sale</a>
+    </div>
+    <div class="promo-code-wrap fade-up">
+      <p class="promo-code-label">Use Code</p>
+      <div class="promo-code" id="promoCode" onclick="copyCode()">ELITE30</div>
+      <div class="promo-discount">Click to Copy • 30% OFF</div>
+    </div>
+  </div>
+
+  <!-- WHY ELITE -->
+  <section class="why" id="why">
+    <p class="section-label fade-up">✦ The Elite Difference</p>
+    <h2 class="section-title fade-up">WHY <span class="outline">CHOOSE US</span></h2>
+    <div class="why-grid">
+      <div class="why-card fade-up">
+        <div class="why-num">01</div>
+        <span class="why-icon">🎨</span>
+        <div class="why-title">Original Graphics</div>
+        <p class="why-desc">Every print is designed in-house — exclusive art you won't find anywhere else. 300+ unique designs and counting.</p>
+      </div>
+      <div class="why-card fade-up">
+        <div class="why-num">02</div>
+        <span class="why-icon">🧵</span>
+        <div class="why-title">Premium Quality</div>
+        <p class="why-desc">100% breathable cotton. Pre-shrunk, color-lock printed, wash-proof. Built to last as long as your style does.</p>
+      </div>
+      <div class="why-card fade-up">
+        <div class="why-num">03</div>
+        <span class="why-icon">🚀</span>
+        <div class="why-title">Fast Delivery</div>
+        <p class="why-desc">Pan-India shipping in 3–5 days. Express delivery available. Free shipping on orders above ₹999.</p>
+      </div>
+      <div class="why-card fade-up">
+        <div class="why-num">04</div>
+        <span class="why-icon">🔄</span>
+        <div class="why-title">Easy Returns</div>
+        <p class="why-desc">7-day hassle-free returns. Wrong size? Bad fit? We fix it. No questions, no drama.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <section class="newsletter" id="newsletter">
+    <p class="section-label fade-up">✦ Stay In The Loop</p>
+    <h2 class="section-title fade-up">GET EARLY <span class="outline">DROP ACCESS</span></h2>
+    <p class="newsletter-sub fade-up">Join 12,000+ elites. Be first for new collections, exclusive deals, and secret drops.</p>
+    <div class="newsletter-form fade-up">
+      <input type="email" class="newsletter-input" placeholder="your@email.com" id="emailInput" />
+      <button class="newsletter-btn" onclick="subscribeEmail()">Subscribe</button>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="logo">ELITE<span>.</span>CLOTHS</span>
+        <p>Street-born fashion for the youth that leads. Based in India. Shipped nationwide. Worn everywhere.</p>
+        <div class="social-links">
+          <a class="social-link" href="#" title="Instagram">𝕀</a>
+          <a class="social-link" href="#" title="X / Twitter">𝕏</a>
+          <a class="social-link" href="#" title="YouTube">▶</a>
+          <a class="social-link" href="#" title="WhatsApp">W</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="#">Graphic Tees</a></li>
+          <li><a href="#">Pants</a></li>
+          <li><a href="#">Hats & Caps</a></li>
+          <li><a href="#">Hoodies</a></li>
+          <li><a href="#">New Arrivals</a></li>
+          <li><a href="#">Sale</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Help</h4>
+        <ul>
+          <li><a href="#">Size Guide</a></li>
+          <li><a href="#">Track Order</a></li>
+          <li><a href="#">Returns Policy</a></li>
+          <li><a href="#">Shipping Info</a></li>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About Elite</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Press</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+          <li><a href="#">elitecloths.in</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Elite Cloths. All rights reserved. <a href="https://elitecloths.in">elitecloths.in</a></p>
+      <div class="domain-badge">elitecloths.in</div>
+      <p>Made with 🔥 for India's youth</p>
+    </div>
+  </footer>
+
+  <script>
+    // CURSOR
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+    function animateCursor() {
+      rx += (mx - rx) * 0.18;
+      ry += (my - ry) * 0.18;
+      cursor.style.left = mx + 'px';
+      cursor.style.top = my + 'px';
+      ring.style.left = rx + 'px';
+      ring.style.top = ry + 'px';
+      requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
+    document.querySelectorAll('a, button, .cat-card, .product-card, .tab').forEach(el => {
+      el.addEventListener('mouseenter', () => { cursor.classList.add('expand'); ring.classList.add('expand'); });
+      el.addEventListener('mouseleave', () => { cursor.classList.remove('expand'); ring.classList.remove('expand'); });
+    });
+
+    // CART COUNT
+    let cartCount = 0;
+    const cartBtn = document.querySelector('.nav-cart');
+    const toast = document.getElementById('toast');
+    function addToCart(btn) {
+      cartCount++;
+      cartBtn.textContent = `🛒 Cart (${cartCount})`;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2200);
+    }
+
+    // FILTER TABS
+    function filterTab(el, cat) {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      el.classList.add('active');
+      document.querySelectorAll('.product-card').forEach(card => {
+        if (cat === 'all' || card.dataset.cat === cat) {
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    // COPY PROMO CODE
+    function copyCode() {
+      navigator.clipboard.writeText('ELITE30').catch(() => {});
+      const el = document.getElementById('promoCode');
+      el.textContent = 'COPIED! ✓';
+      setTimeout(() => el.textContent = 'ELITE30', 2000);
+    }
+
+    // NEWSLETTER
+    function subscribeEmail() {
+      const input = document.getElementById('emailInput');
+      if (input.value.includes('@')) {
+        input.value = 'You\'re in! 🔥';
+        input.style.color = '#ff3c1f';
+        setTimeout(() => { input.value = ''; input.style.color = ''; }, 3000);
+      } else {
+        input.style.borderColor = '#ff3c1f';
+        setTimeout(() => input.style.borderColor = '', 1500);
+      }
+    }
+
+    // SCROLL ANIMATIONS
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), 80);
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-up:not(.visible)').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
